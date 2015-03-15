@@ -6,7 +6,7 @@ output:
         keep_md: true
 ---
 
-```{r global_options, include=FALSE}
+```{r global_options}
 knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figures/',
                       echo=TRUE, warning=FALSE, message=FALSE)
 ```
@@ -38,12 +38,12 @@ library(dplyr)
 dailysteps <- summarise(group_by(activitydata, date), sum(steps))
 names(dailysteps) <- c("date","totalsteps")
 
-# Plot histogram of number of steps across all days
-with(dailysteps, plot(date, totalsteps, main = "Total Number of Steps across all days", xlab = "Date", ylab = "Steps", type = "h"))
-
 # Calculate mean and median total number of steps per day
 meandailysteps <- round(mean(dailysteps$totalsteps, na.rm = TRUE))
 mediandailysteps <- round(median(dailysteps$totalsteps, na.rm = TRUE))
+
+# Plot histogram of number of steps across all days
+with(dailysteps, plot(date, totalsteps, main = "Total Number of Steps across all days", xlab = "Date", ylab = "Steps", type = "h"))
 
 ```
 
@@ -58,11 +58,12 @@ Median total daily steps: `r mediandailysteps`
 intervalsteps <- summarise(group_by(activitydata, interval), mean(steps, na.rm = TRUE))
 names(intervalsteps) <- c("interval","meansteps")
 
+# Determine which time interval contains the largest average # of steps
+maxmeansteps <- intervalsteps[which(intervalsteps$meansteps == max(intervalsteps$meansteps)),]
+
 # Make a time series plot of average # of steps in each time interval vs the time interval
 with(intervalsteps, plot(interval, meansteps, main = "Average steps for each time interval", xlab = "Time Interval", ylab = "Steps", type = "l"))
 
-# Determine which time interval contains the largest average # of steps
-maxmeansteps <- intervalsteps[which(intervalsteps$meansteps == max(intervalsteps$meansteps)),]
 ```
 
 Time interval `r maxmeansteps[1]` contains the largest average number of steps (`r round(maxmeansteps[2])`)
@@ -117,9 +118,7 @@ activitydatacompleted[which(activitydatacompleted$weekday %in% c("Saturday", "Su
 
 activitydatacompleted$weekday <- as.factor(activitydatacompleted$weekday)
 
-
 # Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
-
 
 # Create a data frame containing the time interval and average number of steps for each time interval
 intervalsteps <- summarise(group_by(activitydatacompleted, interval, weekday), mean(steps, na.rm = TRUE))
