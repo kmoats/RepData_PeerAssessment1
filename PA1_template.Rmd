@@ -1,7 +1,9 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
 output:
-html_document:
+   html_document:
+        fig_width: 7
+        fig_height: 5
 keep_md: true
 ---
 
