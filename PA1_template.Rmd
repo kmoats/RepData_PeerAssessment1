@@ -2,15 +2,17 @@
 title: "Reproducible Research: Peer Assessment 1"
 output:
    html_document:
-        fig_width: 7
-        fig_height: 5
 keep_md: true
 ---
 
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figures/',
+                      echo=TRUE, warning=FALSE, message=FALSE)
+```
 
 ## Loading and preprocessing the data
 
-```{r, echo = TRUE}
+```{r}
 
 fileurl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 
@@ -27,7 +29,7 @@ activitydata <- read.csv("activity.csv")
 
 ## What is mean total number of steps taken per day?
 
-```{r, echo = TRUE}
+```{r}
 
 library(dplyr)
 
@@ -50,7 +52,7 @@ Median total daily steps: `r mediandailysteps`
 
 ## What is the average daily activity pattern?
 
-```{r, echo = TRUE}
+```{r}
 # Create a data frame containing the time interval and average number of steps for each time interval
 intervalsteps <- summarise(group_by(activitydata, interval), mean(steps, na.rm = TRUE))
 names(intervalsteps) <- c("interval","meansteps")
@@ -67,7 +69,7 @@ Time interval `r maxmeansteps[1]` contains the largest average number of steps (
 
 ## Imputing missing values
 
-```{r, echo = TRUE}
+```{r}
 # Calculate the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 totalNAs <- sum(is.na(activitydata$steps))
 
@@ -104,7 +106,7 @@ Imputing missing data has no effect on the total daily number of steps.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r, echo = TRUE}
+```{r}
 # Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
 activitydatacompleted <- mutate(activitydatacompleted, weekday = weekdays(as.Date(activitydatacompleted$date)))
