@@ -37,7 +37,10 @@ meandailysteps <- round(mean(dailysteps$totalsteps, na.rm = TRUE))
 mediandailysteps <- round(median(dailysteps$totalsteps, na.rm = TRUE))
 
 # Plot histogram of number of steps across all days
-with(dailysteps, plot(date, totalsteps, main = "Total Number of Steps across all days", xlab = "Date", ylab = "Steps", type = "h"))
+hist(dailysteps$totalsteps, breaks = 10, main = "Total Number of Steps across all days", xlab = "Number of Steps", ylab = "Frequency")
+abline(v = meandailysteps, col = "red")
+abline(v = mediandailysteps, col = "blue")
+legend("topright", legend = c("Mean", "Median"), col=c("red","blue"), lty = 1)
 ```
 
 ![](Figures/unnamed-chunk-2-1.png) 
@@ -91,7 +94,10 @@ meandailysteps <- round(mean(dailysteps$totalsteps, na.rm = TRUE))
 mediandailysteps <- round(median(dailysteps$totalsteps, na.rm = TRUE))
 
 # Plot histogram of number of steps across all days
-with(dailysteps, plot(date, totalsteps, main = "Total Number of Steps across all days with missing values filled in", xlab = "Date", ylab = "Steps", type = "h"))
+hist(dailysteps$totalsteps, breaks = 10, main = "Total Number of Steps across all days with missing values filled in", xlab = "Number of Steps", ylab = "Frequency")
+abline(v = meandailysteps, col = "red")
+abline(v = mediandailysteps, col = "blue")
+legend("topright", legend = c("Mean", "Median"), col=c("red","blue"), lty = 1)
 ```
 
 ![](Figures/unnamed-chunk-4-1.png) 
